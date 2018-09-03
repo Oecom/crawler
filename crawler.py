@@ -17,7 +17,16 @@ class CrawledArticle:
         self.image = image
 
 
-c
+
+class ArticleFetcher:
+    def fetch(self):
+        url = "http://python.beispiel.programmierenlernen.io/index.php"
+        articles = []
+        while True:
+            time.sleep(1)
+            r = requests.get(url)
+            doc = BeautifulSoup(r.text, "html.parser")
+
             # für alle Elemente der Klasse "card" wird eine Schleife erzeugt
             next_page = doc.select_one(".navigation .btn-primary")
             # print(next_page)
