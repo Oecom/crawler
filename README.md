@@ -1,2 +1,2 @@
 # crawler
-Learning Python and created a crawler as a first project.
+Learning Python and created a crawler as first project.
