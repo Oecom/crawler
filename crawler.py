@@ -1,13 +1,15 @@
 import requests
 import csv
 from bs4 import BeautifulSoup
-# urljoin baut weiterführende links aus reletiven pfadangaben zusammen
+# urljoin baut weiterführende links aus relativen pfadangaben zusammen
 # angegeben muss der initiale link, wobei nur die base als root genommen wird unabhängig ob die url die erste Seite ist
 # oder bereits tiefer in der Hierarchie
 from urllib.parse import urljoin
 
-# um eine Wartezeit zwischen den einzelnen Durchläufen einer Schleife zu definieren, muss Modul "tine" eingebunden werden
+# um eine Wartezeit zwischen den einzelnen Durchläufen einer Schleife zu definieren
+# muss Modul "tine" eingebunden werden
 import time
+
 
 class CrawledArticle:
     def __init__(self, title, emoji, content, image):
@@ -15,7 +17,6 @@ class CrawledArticle:
         self.emoji = emoji
         self.content = content
         self.image = image
-
 
 
 class ArticleFetcher:
@@ -35,12 +36,12 @@ class ArticleFetcher:
                 # (Klasse "card" in dem Beispiel)
                 emoji = element.select_one(".emoji").text
                 content = element.select_one(".card-text").text
-                # mehrere span Elemente in .card-title
-                # mit "select" als Liste ausgeben und entsprechendes Element als Index definieren. .text nur Inhalt ausgeben
+                # mehrere span Elemente in .card-title mit "select" als Liste ausgeben und
+                # entsprechendes Element als Index definieren. .text nur Inhalt ausgeben
                 title = element.select(".card-title span")[1].text
                 image = urljoin(url, element.select_one("img").attrs["src"])
-                # Objekt mit jedem Scheifendurchlauf an Liste anhängen, wodurch man die einzelnen Ergebnisse außerhalb der
-                # Schleife benutzen kann
+                # Objekt mit jedem Scheifendurchlauf an Liste anhängen,
+                # wodurch man die einzelnen Ergebnisse außerhalb der Schleife benutzen kann
                 crawled = CrawledArticle(title, emoji, content, image)
                 articles.append(crawled)
 
@@ -58,10 +59,6 @@ class ArticleFetcher:
                 return True
             else:
                 url = urljoin(url, next_page.attrs["href"])
-
-class FetcherOutput:
-
-
 
 
 ausgabe = ArticleFetcher()
