@@ -2,8 +2,8 @@ import requests
 import csv
 from bs4 import BeautifulSoup
 # urljoin baut weiterführende links aus relativen pfadangaben zusammen
-# angegeben muss der initiale link, wobei nur die base als root genommen wird unabhängig ob die url die erste Seite ist
-# oder bereits tiefer in der Hierarchie
+# angegeben muss der initiale link, wobei nur die Hompage der URL genommen wird unabhängig ob die url
+# die erste Seite ist oder bereits tiefer in der Hierarchie
 from urllib.parse import urljoin
 
 # um eine Wartezeit zwischen den einzelnen Durchläufen einer Schleife zu definieren
@@ -48,12 +48,13 @@ class ArticleFetcher:
                 # Außerhalb der Schleife müssen die Ergebnisse jedes Durchlaufs an eine Liste gehängt werden
                 # geht so nur mit jedem Schleifendurchlauf
             # print(next_page.attrs["href"])
-
+            print(articles)
             # Prüfung ob es die Referent in next_page.attr["href"] gibt, BEVOR mit dem Objekt gearbeitet wird
             # Sonst führt dies zum Fehler "AttributeError: 'NoneType' object has no attribute 'attrs'"
             if next_page is None:
                 with open("crawler.csv", "w", newline = "", encoding = "utf-8") as file:
-                    writer = csv.writer(file, dialect = "excel-tab", delimiter = ";", quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+                    writer = csv.writer(file, dialect = "excel-tab", delimiter = ";", quotechar = '"',
+                                        quoting = csv.QUOTE_MINIMAL)
                     for element in articles:
                         writer.writerow([element.emoji, element.title, element.image, element.content])
                 return True
